@@ -1,15 +1,32 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Caching inverse of a matrix
+## P programming inverse of a matrix
 
-## Write a short comment describing this function
+## Set the value and the inverse of the matrix.
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix:<- function(x = numeric()) {
+        INV <- NULL
+        set <- function(mat) {
+                x <<- mat
+                INV <<- NULL
+        }
+        get <- function() x
+        setinv <- function(inverse) INV <<- inverse
+        getinv <- function() INV
+        list(set = set, get = get,
+             setinv = setinv,
+             getinv =  getinv)
 }
 
-
-## Write a short comment describing this function
+## Matrix inverse
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+        INV <- x$getinv()
+        if(!is.null(INV)) {
+                message("getting cached data")
+                return(INV)
+        }
+        matr <- x$get()
+        INV <- solve(matr)
+        x$setinv(INV)
+        INV
 }
